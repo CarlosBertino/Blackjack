@@ -11,6 +11,11 @@
      const tipos      = ['C','D','H','S'],
           especiales  = ['A','J','Q','K'];
      
+
+
+     let puntosJugador     = 0;
+     let puntosComputadora = 0;
+
      // Creamos deck para barajar
      const crearDeck = () => {
 
@@ -29,12 +34,11 @@
           }
      
           deck = _.shuffle (deck);                // Incorporamos extension underscore para hacer el shuffle
-
           return deck;
      };
      
      crearDeck();
-     console.log(deck);
+
      // Tomamos una carta que al mismo tiempo sale del deck
      const pedirCarta = () => {
      
@@ -48,17 +52,43 @@
      // Asignamos puntaje a cada carta.
      // PD: recordar que A es 11 o 1, aca lo tomamos siempre como 11. Arreglarlo mas adelante.
      const valorCarta = (carta) => {
-          const valor = carta.substring(0, carta.length-1);      // Tomamos la carta y leemos desde la posición 0 hasta el anteúltimo caracter
-     
-          return ( isNaN(valor)) ?                               // No es numero? -> False entonces *1 y lo transforma en numero
-                    (valor === 'A') ? 11 : 10                    // No es numero? -> True entonces si es A=11, sino =10
-               : valor * 1;
-     }
-     
+          let valor = carta.substring(0, carta.length-1);      // Tomamos la carta y leemos desde la posición 0 hasta el anteúltimo caracter
+             
+          if (puntosComputadora === 0) {                       // Para ver si la computadora barajó: entra en el ciclo Jugador o ciclo Computadora
+
+               if (valor === 'J' || valor === 'Q' || valor === 'K') {           
+                    valor = 10
+               } else if (valor === 'A'){
+                    if (puntosJugador > 10) {                  // Si los puntos son 10 o menores le asigna 1 para no pasarse...
+                         valor = 1
+                    } else {
+                         valor = 11                            // sino es 11
+                    }
+               } else {
+                    valor = valor*1
+               }
+          }
+          
+          else {
+               if (valor === 'J' || valor === 'Q' || valor === 'K') {
+                    valor = 10
+               } else if (valor === 'A'){
+                    if (puntosComputadora > 10) {                  // Si los puntos son 10 o menores le asigna 1 para no pasarse...
+                         valor = 1
+                    } else {
+                         valor = 11                            // sino es 11
+                    }
+               } else {
+                    valor = valor*1
+               }
+          }
+
+          return valor;
+     };
+
      // DOM - Referencias y botones del html
      
-     let puntosJugador     = 0;
-     let puntosComputadora = 0;
+
      
      const btnNuevo   = document.querySelector('#btnNuevo'),
           btnPedir   = document.querySelector('#btnPedir'),
@@ -173,7 +203,7 @@
                     alert('Decisión inconclusa. Consultar con soporte')
                }
      
-          }, 150);
+          }, 200);
      }
 
 })();
