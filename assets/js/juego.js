@@ -9,7 +9,7 @@
 
      let deck         = [];
      const tipos      = ['C','D','H','S'],
-          especiales = ['A','J','Q','K'];
+          especiales  = ['A','J','Q','K'];
      
      // Creamos deck para barajar
      const crearDeck = () => {
@@ -28,11 +28,13 @@
                }
           }
      
-          return _.shuffle (deck);                     // Incorporamos extension underscore para hacer el shuffle
+          deck = _.shuffle (deck);                // Incorporamos extension underscore para hacer el shuffle
+
+          return deck;
      };
      
      crearDeck();
-
+     console.log(deck);
      // Tomamos una carta que al mismo tiempo sale del deck
      const pedirCarta = () => {
      
